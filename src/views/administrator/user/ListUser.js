@@ -52,10 +52,10 @@ const ListUser = () => {
     history.push(`/administrator/user/create`);
   };
   const handleClickRead = (item) => {
-    history.push(`/administrator/user/read/${item.user_id}`);
+    history.push(`/administrator/user/read/${item.id}`);
   };
   const handleClickUpdate = (item) => {
-    history.push(`/administrator/user/update/${item.user_id}`);
+    history.push(`/administrator/user/update/${item.id}`);
   };
   const handleClickDelete = (item) => {
     confirmAlert({
@@ -68,7 +68,7 @@ const ListUser = () => {
         {
           label: "Yes",
           onClick: () => {
-            var body = { data: { user_id: item.user_id } };
+            var body = { data: { id: item.id } };
             console.log(body);
             $axios.delete(`master/user`, body).then((res) => {
               if (res.data.error) toast.error(`${res.data.message}`);
@@ -83,9 +83,9 @@ const ListUser = () => {
 
   const fields = [
     { key: "user_id", label: "ID" },
-    { key: "user_name", label: "User Name" },
-    { key: "user_email", label: "Email" },
-    { key: "department_name", label: "Department Name" },
+    { key: "nik", label: "NIK" },
+    { key: "email", label: "Email" },
+    { key: "username_telegram", label: "Username Telegram" },
     { key: "section_name", label: "Section Name" },
     { key: "status", label: "Status" },
     { key: "id", label: "Action" },

@@ -40,7 +40,7 @@ const FormUser = ({ match }) => {
   useEffect(() => {
     console.log(match);
     if (Object.keys(detailData).length == 1 && param.id) {
-      $axios.get(`master/user?user_id=${param.id}`).then((res) => {
+      $axios.get(`master/user?id=${param.id}`).then((res) => {
         if (res.data.error) {
           toast.error(`${res.data.message}`);
           return;
@@ -100,12 +100,7 @@ const FormUser = ({ match }) => {
   };
 
   const handleSubmit = () => {
-    var required_data = [
-      "user_name",
-      "user_email",
-      "department_id",
-      "section_id",
-    ];
+    var required_data = ["email", "department_id", "nik", "section_id"];
     if (param.type == "add") {
       required_data.push("user_password");
     }
@@ -117,8 +112,8 @@ const FormUser = ({ match }) => {
       }
     }
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!detailData.user_email.match(mailformat)) {
-      error["user_email"] = true;
+    if (!detailData.email.match(mailformat)) {
+      error["email"] = true;
     }
     setErrorData(error);
     if (Object.keys(error).length > 0) {
@@ -171,18 +166,37 @@ const FormUser = ({ match }) => {
                 <CFormGroup row>
                   <CCol md="3">
                     <CLabel htmlFor="text-input">
-                      User Name <span className="text-danger">*</span>
+                      Username Telegram <span className="text-danger"></span>
                     </CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
                     <CInput
                       disabled={param.type == "read" ? true : false}
-                      invalid={errorData.user_name}
-                      value={detailData.user_name}
+                      value={detailData.username_telegram}
                       onChange={(e) =>
                         setDetailData({
                           ...detailData,
-                          user_name: e.target.value,
+                          username_telegram: e.target.value,
+                        })
+                      }
+                    />
+                  </CCol>
+                </CFormGroup>{" "}
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="text-input">
+                      NIK <span className="text-danger">*</span>
+                    </CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput
+                      disabled={param.type == "read" ? true : false}
+                      invalid={errorData.nil}
+                      value={detailData.nik}
+                      onChange={(e) =>
+                        setDetailData({
+                          ...detailData,
+                          nik: e.target.value,
                         })
                       }
                     />
@@ -197,13 +211,13 @@ const FormUser = ({ match }) => {
                   <CCol xs="12" md="9">
                     <CInput
                       disabled={param.type == "read" ? true : false}
-                      invalid={errorData.user_email}
-                      value={detailData.user_email}
+                      invalid={errorData.email}
+                      value={detailData.email}
                       type={"email"}
                       onChange={(e) =>
                         setDetailData({
                           ...detailData,
-                          user_email: e.target.value,
+                          email: e.target.value,
                         })
                       }
                     />
