@@ -23,6 +23,7 @@
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.22",
     "@coreui/chartjs": "^2.0.0",
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.0",
