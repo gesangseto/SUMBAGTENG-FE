@@ -2,32 +2,16 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { CCard, CCardBody, CCardHeader } from "@coreui/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import $axios from "../../api";
 
 am4core.useTheme(am4themes_animated);
 
 const HealthyCheck = () => {
   const chart = useRef(null);
+  const [data, setData] = useState([]);
 
-  // Add data
-  const data = [
-    {
-      title: "Lithuania",
-      value: 501.9,
-      color: am4core.color("#41e310"),
-    },
-    {
-      title: "Czechia",
-      value: 301.9,
-      color: am4core.color("#ded302"),
-    },
-    {
-      title: "Ireland",
-      value: 201.1,
-      color: am4core.color("#d60000"),
-    },
-  ];
-  useEffect(() => {
+  const loadPie = () => {
     let chart = am4core.create("HealthyCheck", am4charts.PieChart);
     chart.data = data;
     // Add and configure Series
@@ -48,7 +32,32 @@ const HealthyCheck = () => {
     return () => {
       chart.dispose();
     };
-  }, []);
+  };
+  // Add data
+  useEffect(() => {
+    if (data.length == 0) {
+      $axios.get(`dashboard/healthy-check`).then((res) => {
+        let resp = res.data.data;
+        let colors = [
+          am4core.color("yellow"),
+          am4core.color("red"),
+          am4core.color("green"),
+        ];
+        let i = 0;
+        let datas = [];
+        for (const it of resp) {
+          let tmp = it;
+          tmp.color = colors[i];
+          i = i + 1;
+          datas.push(tmp);
+        }
+        setData(datas);
+      });
+    }
+    if (data.length > 0) {
+      loadPie();
+    }
+  }, [data]);
   return (
     <CCard>
       <CCardHeader>Healthy Check</CCardHeader>

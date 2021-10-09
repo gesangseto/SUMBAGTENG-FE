@@ -13,35 +13,19 @@ import { useHistory, useLocation } from "react-router-dom";
 import $axios from "../../api";
 
 const SummaryAlarm = () => {
-  const history = useHistory();
-  const location = useLocation().pathname.split("/");
-  const pathParent = location[1];
-  const pathChild = location[2];
-  const pathOperation = location[3];
-  const [pagination, setPagination] = useState({ page: 1, size: 10 });
-  const [totalPage, setTotalPage] = useState(0);
-  const [loadData, setLoadData] = useState(true);
   const [listData, setListData] = useState([]);
 
   useEffect(() => {
-    // $axios
-    //   .get(
-    //     `master/user_department?page=${pagination.page}&limit=${pagination.size}`
-    //   )
-    //   .then((res) => {
-    //     console.table(res.data.data);
-    //     setListData(res.data.data);
-    //     setTotalPage(parseInt(res.data.total / pagination.size) + 1);
-    //   });
-  }, [pagination, loadData]);
+    if (listData.length == 0) {
+      $axios.get(`dashboard/summary-alarm`).then((res) => {
+        console.table(res.data.data);
+        setListData(res.data.data);
+      });
+    }
+  }, [listData]);
 
-  const data = [
-    { name: "Datacomm", critical: 0, major: 0, minor: 0 },
-    { name: "GraPARI ON", critical: 0, major: 0, minor: 0 },
-    { name: "GraPARI MITRA", critical: 0, major: 0, minor: 0 },
-  ];
   const fields = [
-    { key: "name", label: " " },
+    { key: "graha_name", label: " " },
     { key: "critical", label: "Critical" },
     { key: "major", label: "Major" },
     { key: "minor", label: "Minor" },
@@ -62,23 +46,23 @@ const SummaryAlarm = () => {
       <CCardHeader>Summary Alarm</CCardHeader>
       <CCardBody>
         <CDataTable
-          items={data}
+          items={listData}
           fields={fields}
           hover
           scopedSlots={{
             critical: (item) => (
               <td style={{ textAlign: "center" }}>
-                <CBadge color={"danger"}>{item.critical}</CBadge>
+                <CBadge color={"danger"}>{item.critical ?? 0}</CBadge>
               </td>
             ),
             major: (item) => (
               <td style={{ textAlign: "center" }}>
-                <CBadge color={"warning"}>{item.major}</CBadge>
+                <CBadge color={"warning"}>{item.major ?? 0}</CBadge>
               </td>
             ),
             minor: (item) => (
               <td style={{ textAlign: "center" }}>
-                <CBadge color={"success"}>{item.minor}</CBadge>
+                <CBadge color={"success"}>{item.minor ?? 0}</CBadge>
               </td>
             ),
           }}
