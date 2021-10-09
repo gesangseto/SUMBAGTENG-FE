@@ -45,6 +45,9 @@ const SummaryRequest = () => {
     chart.legend = new am4charts.Legend();
     chart.legend.position = "right";
     chart.hiddenState.properties.radius = am4core.percent(0);
+    return () => {
+      chart.dispose();
+    };
   };
   const chartTwo = () => {
     let chart = am4core.create("SummaryRequest-2", am4charts.PieChart);
@@ -65,6 +68,10 @@ const SummaryRequest = () => {
     chart.legend.position = "right";
     chart.hiddenState.properties.radius = am4core.percent(0);
     chart.svgContainer.htmlElement.style.height = 100;
+
+    return () => {
+      chart.dispose();
+    };
   };
   useEffect(() => {
     chartOne();
@@ -78,13 +85,13 @@ const SummaryRequest = () => {
           <CCol sm="12" lg="6">
             <div
               id="SummaryRequest-1"
-              style={{ width: "100%", height: "200px" }}
+              style={{ width: "100%", height: "210px" }}
             ></div>
           </CCol>
           <CCol sm="12" lg="6">
             <div
               id="SummaryRequest-2"
-              style={{ width: "100%", height: "200px" }}
+              style={{ width: "100%", height: "210px" }}
             ></div>
           </CCol>
         </CRow>

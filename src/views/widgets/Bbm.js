@@ -16,8 +16,9 @@ const Bbm = () => {
     toolTip: {
       shared: true,
     },
-    dataPointWidth: 20,
+    dataPointWidth: 40,
     height: "150",
+    weight: "100%",
     data: [
       {
         type: "stackedBar100",

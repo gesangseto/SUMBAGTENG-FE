@@ -45,7 +45,6 @@ const HealthyCheck = () => {
     chart.legend = new am4charts.Legend();
     // chart.legend.position = "right";
     chart.hiddenState.properties.radius = am4core.percent(0);
-
     return () => {
       chart.dispose();
     };
@@ -54,7 +53,7 @@ const HealthyCheck = () => {
     <CCard>
       <CCardHeader>Healthy Check</CCardHeader>
       <CCardBody>
-        <div id="HealthyCheck" style={{ width: "100%", height: "500px" }}></div>
+        <div id="HealthyCheck" style={{ width: "100%", height: "350px" }}></div>
       </CCardBody>
     </CCard>
   );
