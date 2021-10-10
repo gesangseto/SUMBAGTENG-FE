@@ -1,7 +1,10 @@
 import { CHeader, CHeaderNav } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+
+import logo from "../assets/logo.png";
 
 const TheHeader = () => {
   const location = useLocation()
@@ -28,7 +31,8 @@ const TheHeader = () => {
   return (
     <CHeader withSubheader>
       <CHeaderNav className="d-md-down-none mr-auto">
-        &nbsp;&nbsp;&nbsp;{"IT Flash Info "}
+        &nbsp;&nbsp;&nbsp;{" "}
+        <CIcon src={logo} className="c-sidebar-brand-full" height={50} />
       </CHeaderNav>
 
       {/* <CHeaderNav className="px-3">
