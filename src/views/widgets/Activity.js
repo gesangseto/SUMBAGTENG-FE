@@ -8,34 +8,25 @@ const Activity = ({ withCharts }) => {
   const [power, setPower] = useState({});
   const [bbm, setBbm] = useState([]);
   const [temp, setTemp] = useState([]);
-  const [env, setEnv] = useState({});
+  const [env, setEnv] = useState([]);
   // render
 
   useEffect(() => {
     if (initialLoad) {
       $axios.get(`dashboard/pic`).then((res) => {
-        console.table("PIC");
         setPic(res.data.data[0]);
       });
       $axios.get(`dashboard/power-condition`).then((res) => {
-        console.table("POWER");
-        console.table(res.data.data[0]);
         setPower(res.data.data[0]);
       });
       $axios.get(`dashboard/bbm`).then((res) => {
-        console.table("BBM");
-        console.table(res.data.data);
         setBbm(res.data.data);
       });
       $axios.get(`dashboard/temp-humidities`).then((res) => {
-        console.table("TEMP");
-        console.table(res.data.data);
         setTemp(res.data.data);
       });
       $axios.get(`dashboard/environment`).then((res) => {
-        console.table("ENV");
-        console.table(res.data.data);
-        setEnv(res.data.data[0]);
+        setEnv(res.data.data);
       });
       setInitialLoad(false);
     }
@@ -239,7 +230,7 @@ const Activity = ({ withCharts }) => {
               <tbody>
                 {temp.map((item) => {
                   return (
-                    <tr>
+                    <tr key={item.id}>
                       <td>{item.room_name}</td>
                       <td>&nbsp;:&nbsp;</td>
                       <td>{item.temp_hum}</td>
@@ -252,21 +243,15 @@ const Activity = ({ withCharts }) => {
             <h5>Monitoring Environment</h5>
             <table>
               <tbody>
-                <tr>
-                  <td>Water Leak</td>
-                  <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
-                </tr>
-                <tr>
-                  <td>ITOC</td>
-                  <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
-                </tr>
-                <tr>
-                  <td>FOC Monitoring</td>
-                  <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
-                </tr>
+                {env.map((item) => {
+                  return (
+                    <tr key={item.id}>
+                      <td>{item.environment_name}</td>
+                      <td>&nbsp;:&nbsp;</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </CCardBody>

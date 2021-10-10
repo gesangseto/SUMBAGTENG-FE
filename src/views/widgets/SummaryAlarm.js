@@ -16,7 +16,6 @@ const SummaryAlarm = () => {
   useEffect(() => {
     if (initialLoad) {
       $axios.get(`dashboard/summary-alarm`).then((res) => {
-        console.table(res.data.data);
         setListData(res.data.data);
       });
       setInitialLoad(false);
@@ -31,7 +30,6 @@ const SummaryAlarm = () => {
   ];
 
   const getBadge = (status) => {
-    console.log(status);
     switch (status) {
       case "1":
         return "success";
