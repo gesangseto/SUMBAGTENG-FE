@@ -66,7 +66,7 @@ const SummaryRequest = () => {
   useEffect(() => {
     if (initialLoad) {
       $axiosResource
-        .get(
+        .post(
           `resource/itsupport_tool/API/total_ticket.php?type=monthly&month=${moment(
             date
           ).format("YYYY-MM")}`
@@ -90,7 +90,7 @@ const SummaryRequest = () => {
           chartMonthly();
         });
       $axiosResource
-        .get(
+        .post(
           `resource/itsupport_tool/API/total_ticket.php?type=daily&month=${moment(
             date
           ).format("YYYY-MM-DD")}`
