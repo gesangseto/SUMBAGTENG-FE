@@ -49,17 +49,19 @@ const TheHeader = () => {
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
-        {location.map((item, index) => {
-          return (
-            <a
-              key={index}
-              className="card-title mb-0"
-              style={{ textTransform: "capitalize" }}
-            >
-              {item}&nbsp;{location.length - 1 != index ? `/` : null}&nbsp;
-            </a>
-          );
-        })}
+        {location[0] == "dashboard"
+          ? "IT Flash Info "
+          : location.map((item, index) => {
+              return (
+                <a
+                  key={index}
+                  className="card-title mb-0"
+                  style={{ textTransform: "capitalize" }}
+                >
+                  {item}&nbsp;{location.length - 1 != index ? `/` : null}&nbsp;
+                </a>
+              );
+            })}
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
