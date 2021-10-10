@@ -1,14 +1,7 @@
-import CIcon from "@coreui/icons-react";
-import { CHeader, CHeaderBrand, CHeaderNav, CToggler } from "@coreui/react";
+import { CHeader, CHeaderNav } from "@coreui/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import {
-  TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
-  TheHeaderDropdownTasks,
-} from "./index";
 
 const TheHeader = () => {
   const location = useLocation()
@@ -34,42 +27,16 @@ const TheHeader = () => {
 
   return (
     <CHeader withSubheader>
-      <CToggler
-        inHeader
-        className="ml-md-3 d-lg-none"
-        onClick={toggleSidebarMobile}
-      />
-      <CToggler
-        inHeader
-        className="ml-3 d-md-down-none"
-        onClick={toggleSidebar}
-      />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon name="logo" height="48" alt="Logo" />
-      </CHeaderBrand>
-
       <CHeaderNav className="d-md-down-none mr-auto">
-        {location[0] == "dashboard"
-          ? "IT Flash Info "
-          : location.map((item, index) => {
-              return (
-                <a
-                  key={index}
-                  className="card-title mb-0"
-                  style={{ textTransform: "capitalize" }}
-                >
-                  {item}&nbsp;{location.length - 1 != index ? `/` : null}&nbsp;
-                </a>
-              );
-            })}
+        &nbsp;&nbsp;&nbsp;{"IT Flash Info "}
       </CHeaderNav>
 
-      <CHeaderNav className="px-3">
+      {/* <CHeaderNav className="px-3">
         <TheHeaderDropdownNotif />
         <TheHeaderDropdownTasks />
         <TheHeaderDropdownMssg />
         <TheHeaderDropdown />
-      </CHeaderNav>
+      </CHeaderNav> */}
 
       {/* <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter
