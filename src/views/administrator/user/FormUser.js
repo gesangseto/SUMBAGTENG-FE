@@ -100,7 +100,13 @@ const FormUser = ({ match }) => {
   };
 
   const handleSubmit = () => {
-    var required_data = ["email", "department_id", "nik", "section_id"];
+    var required_data = [
+      "email",
+      "department_id",
+      "nik",
+      "section_id",
+      "user_name",
+    ];
     if (param.type == "add") {
       required_data.push("user_password");
     }
@@ -181,7 +187,7 @@ const FormUser = ({ match }) => {
                       }
                     />
                   </CCol>
-                </CFormGroup>{" "}
+                </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
                     <CLabel htmlFor="text-input">
@@ -218,6 +224,25 @@ const FormUser = ({ match }) => {
                         setDetailData({
                           ...detailData,
                           email: e.target.value,
+                        })
+                      }
+                    />
+                  </CCol>
+                </CFormGroup>
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="text-input">
+                      Username Login <span className="text-danger"></span>
+                    </CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput
+                      disabled={param.type == "read" ? true : false}
+                      value={detailData.user_name}
+                      onChange={(e) =>
+                        setDetailData({
+                          ...detailData,
+                          user_name: e.target.value,
                         })
                       }
                     />
