@@ -3,38 +3,27 @@ import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import React, { useEffect, useRef, useState } from "react";
+import $axiosResource from "../../apiResource";
+import moment from "moment";
 
 am4core.useTheme(am4themes_animated);
 
 const SummaryRequest = () => {
   const [initialLoad, setInitialLoad] = useState(true);
+  const date = new Date();
+  const [dataDaily, setDataDaily] = useState([]);
+  const [dataMonthly, setDataMonthly] = useState([]);
   const chart = useRef(null);
 
   // Add data
-  const data = [
-    {
-      country: "Lithuania",
-      litres: 501.9,
-      color: am4core.color("#41e310"),
-    },
-    {
-      country: "Czechia",
-      litres: 301.9,
-      color: am4core.color("#ded302"),
-    },
-    {
-      country: "Ireland",
-      litres: 201.1,
-      color: am4core.color("#d60000"),
-    },
-  ];
-  const chartOne = () => {
+
+  const chartDaily = () => {
     let chart = am4core.create("SummaryRequest-1", am4charts.PieChart);
-    chart.data = data;
+    chart.data = dataDaily;
     // Add and configure Series
     let pieSeries = chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = "litres";
-    pieSeries.dataFields.category = "country";
+    pieSeries.dataFields.value = "total";
+    pieSeries.dataFields.category = "kategori";
     pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeOpacity = 1;
     pieSeries.slices.template.propertyFields.fill = "color";
@@ -50,13 +39,13 @@ const SummaryRequest = () => {
       chart.dispose();
     };
   };
-  const chartTwo = () => {
+  const chartMonthly = () => {
     let chart = am4core.create("SummaryRequest-2", am4charts.PieChart);
-    chart.data = data;
+    chart.data = dataMonthly;
     // Add and configure Series
     let pieSeries = chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = "litres";
-    pieSeries.dataFields.category = "country";
+    pieSeries.dataFields.value = "total";
+    pieSeries.dataFields.category = "kategori";
     pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeOpacity = 1;
     pieSeries.slices.template.propertyFields.fill = "color";
@@ -76,8 +65,54 @@ const SummaryRequest = () => {
   };
   useEffect(() => {
     if (initialLoad) {
-      chartOne();
-      chartTwo();
+      $axiosResource
+        .get(
+          `resource/itsupport_tool/API/total_ticket.php?type=monthly&month=${moment(
+            date
+          ).format("YYYY-MM")}`
+        )
+        .then((res) => {
+          let resp = res.data;
+          let colors = [
+            am4core.color("yellow"),
+            am4core.color("red"),
+            am4core.color("green"),
+          ];
+          let i = 0;
+          let datas = [];
+          for (const it of resp) {
+            let tmp = it;
+            tmp.color = colors[i];
+            i = i + 1;
+            datas.push(tmp);
+          }
+          setDataMonthly(datas);
+          chartMonthly();
+        });
+      $axiosResource
+        .get(
+          `resource/itsupport_tool/API/total_ticket.php?type=daily&month=${moment(
+            date
+          ).format("YYYY-MM-DD")}`
+        )
+        .then((res) => {
+          let resp = res.data;
+          let colors = [
+            am4core.color("yellow"),
+            am4core.color("red"),
+            am4core.color("green"),
+          ];
+          let i = 0;
+          let datas = [];
+          for (const it of resp) {
+            let tmp = it;
+            tmp.color = colors[i];
+            i = i + 1;
+            datas.push(tmp);
+          }
+          setDataDaily(datas);
+          chartDaily();
+        });
       setInitialLoad(false);
     }
   }, []);
