@@ -1,22 +1,8 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  CHeader,
-  CToggler,
-  CHeaderBrand,
-  CHeaderNav,
-  CHeaderNavItem,
-  CHeaderNavLink,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink,
-} from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
-// routes config
-import routes from "../routes";
+import { CHeader, CHeaderBrand, CHeaderNav, CToggler } from "@coreui/react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-
 import {
   TheHeaderDropdown,
   TheHeaderDropdownMssg,
