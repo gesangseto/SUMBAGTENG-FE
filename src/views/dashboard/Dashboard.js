@@ -32,7 +32,7 @@ const Dashboard = () => {
           <CalendarWidget />
         </CCol>
         <CCol sm="6" lg="8">
-          <EventCalendar />
+          {/* <EventCalendar /> */}
         </CCol>
       </CRow>
     </>

@@ -1,3 +1,4 @@
+import { load } from "@amcharts/amcharts4/.internal/core/utils/Net";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -8,6 +9,7 @@ import $axios from "../../api";
 am4core.useTheme(am4themes_animated);
 
 const HealthyCheck = () => {
+  const [initialLoad, setInitialLoad] = useState(true);
   const chart = useRef(null);
   const [data, setData] = useState([]);
 
@@ -35,7 +37,7 @@ const HealthyCheck = () => {
   };
   // Add data
   useEffect(() => {
-    if (data.length == 0) {
+    if (initialLoad) {
       $axios.get(`dashboard/healthy-check`).then((res) => {
         let resp = res.data.data;
         let colors = [
@@ -53,15 +55,14 @@ const HealthyCheck = () => {
         }
         setData(datas);
       });
+      setInitialLoad(false);
     }
-    if (data.length > 0) {
-      loadPie();
-    }
-  }, [data]);
+  }, []);
   return (
     <CCard>
       <CCardHeader>Healthy Check</CCardHeader>
       <CCardBody>
+        {data.length > 0 && loadPie()}
         <div id="HealthyCheck" style={{ width: "100%", height: "350px" }}></div>
       </CCardBody>
     </CCard>

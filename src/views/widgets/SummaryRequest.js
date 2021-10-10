@@ -2,11 +2,12 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 am4core.useTheme(am4themes_animated);
 
 const SummaryRequest = () => {
+  const [initialLoad, setInitialLoad] = useState(true);
   const chart = useRef(null);
 
   // Add data
@@ -74,8 +75,11 @@ const SummaryRequest = () => {
     };
   };
   useEffect(() => {
-    chartOne();
-    chartTwo();
+    if (initialLoad) {
+      chartOne();
+      chartTwo();
+      setInitialLoad(false);
+    }
   }, []);
   return (
     <CCard>

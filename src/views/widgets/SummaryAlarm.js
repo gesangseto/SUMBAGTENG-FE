@@ -3,26 +3,25 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CCol,
   CDataTable,
-  CRow,
 } from "@coreui/react";
 import React, { useEffect, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { useHistory, useLocation } from "react-router-dom";
 import $axios from "../../api";
 
 const SummaryAlarm = () => {
+  const [initialLoad, setInitialLoad] = useState(true);
   const [listData, setListData] = useState([]);
 
   useEffect(() => {
-    if (listData.length == 0) {
+    if (initialLoad) {
       $axios.get(`dashboard/summary-alarm`).then((res) => {
         console.table(res.data.data);
         setListData(res.data.data);
       });
+      setInitialLoad(false);
     }
-  }, [listData]);
+  }, []);
 
   const fields = [
     { key: "graha_name", label: " " },

@@ -1,5 +1,5 @@
 import { CCard, CCardBody } from "@coreui/react";
-import React, { useState } from "react";
+import React from "react";
 import CalendarEvent from "react-awesome-calendar";
 
 const EventCalendar = ({}) => {

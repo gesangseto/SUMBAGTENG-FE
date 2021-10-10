@@ -8,11 +8,12 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var CanvasJSChart2 = CanvasJSReact.CanvasJSChart;
 
 const Bbm = () => {
+  const [initialLoad, setInitialLoad] = useState(true);
   const [dataDaily, setDataDaily] = useState({});
   const [dataMonthly, setDataMonthly] = useState({});
 
   useEffect(() => {
-    if (Object.keys(dataDaily).length == 0) {
+    if (initialLoad) {
       $axios.get(`dashboard/bbm-daily`).then((res) => {
         let tempData = {
           animationEnabled: true,
@@ -25,15 +26,13 @@ const Bbm = () => {
             shared: true,
           },
           dataPointWidth: 40,
-          height: 150,
+          height: 160,
           weight: "100%",
           data: res.data.data,
         };
         setDataDaily(tempData);
       });
-    }
 
-    if (Object.keys(dataMonthly).length == 0) {
       $axios.get(`dashboard/bbm-monthly`).then((res) => {
         let tempData = {
           animationEnabled: true,
@@ -46,14 +45,15 @@ const Bbm = () => {
             shared: true,
           },
           dataPointWidth: 40,
-          height: 150,
+          height: 160,
           weight: "100%",
           data: res.data.data,
         };
         setDataMonthly(tempData);
       });
+      setInitialLoad(false);
     }
-  }, [dataDaily, dataMonthly]);
+  }, []);
 
   return (
     <CCard>
