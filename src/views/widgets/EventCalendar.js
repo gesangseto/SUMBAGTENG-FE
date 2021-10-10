@@ -36,7 +36,7 @@ const initialData = {
   notes: null,
   created_date: null,
   created_by: null,
-  created_form: null,
+  created_from: null,
   type: null,
 };
 const EventCalendar = ({}) => {
@@ -56,9 +56,9 @@ const EventCalendar = ({}) => {
         datas.push({
           id: it.id,
           title: it.notes,
-          start: it.created_form,
-          end: it.created_form,
-          created_form: it.created_form,
+          start: it.created_from,
+          end: it.created_from,
+          created_from: it.created_from,
           created_by: it.created_by,
           allDay: true,
           resource: "TEST",
@@ -86,7 +86,7 @@ const EventCalendar = ({}) => {
       notes: e.title,
       type: "edit",
       created_by: e.created_by,
-      created_form: e.start,
+      created_from: e.start,
     });
     setVisible(true);
   };
@@ -95,7 +95,7 @@ const EventCalendar = ({}) => {
       notes: "",
       type: null,
       created_by: "",
-      created_form: e.start,
+      created_from: e.start,
     });
     setVisible(true);
   };
@@ -120,10 +120,9 @@ const EventCalendar = ({}) => {
     let data = {
       notes: detailData.notes,
       created_by: detailData.created_by,
-      created_form: moment(detailData.created_form).format("YYYY-MM-DD"),
+      created_from: moment(detailData.created_from).format("YYYY-MM-DD"),
     };
 
-    console.log(data);
     if (detailData.id) {
       data.id = detailData.id;
       $axios.post(`report/note`, data).then((res) => {
