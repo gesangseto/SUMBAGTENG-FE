@@ -5,6 +5,7 @@ import Moment from "react-moment";
 const Activity = ({ withCharts }) => {
   const [initialLoad, setInitialLoad] = useState(true);
   const [pic, setPic] = useState({});
+  const [activity, setActivity] = useState({});
   const [power, setPower] = useState({});
   const [bbm, setBbm] = useState([]);
   const [temp, setTemp] = useState([]);
@@ -15,6 +16,9 @@ const Activity = ({ withCharts }) => {
     if (initialLoad) {
       $axios.get(`dashboard/pic`).then((res) => {
         setPic(res.data.data[0]);
+      });
+      $axios.get(`dashboard/activity`).then((res) => {
+        setActivity(res.data.data[0]);
       });
       $axios.get(`dashboard/power-condition`).then((res) => {
         setPower(res.data.data[0]);
@@ -67,27 +71,35 @@ const Activity = ({ withCharts }) => {
                 <tr>
                   <td>Vendor</td>
                   <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
+                  <td>{activity.vendor}</td>
                 </tr>
                 <tr>
                   <td>Start Time</td>
                   <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
+                  <td>
+                    <Moment format="YYYY-MM-DD hh:ii:ss">
+                      {activity.start_time}
+                    </Moment>
+                  </td>
                 </tr>
                 <tr>
                   <td>End Time</td>
                   <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
+                  <td>
+                    <Moment format="YYYY-MM-DD hh:ii:ss">
+                      {activity.end_time}
+                    </Moment>
+                  </td>
                 </tr>
                 <tr>
                   <td>Status</td>
                   <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
+                  <td>{activity.status}</td>
                 </tr>
                 <tr>
                   <td>Activity</td>
                   <td>&nbsp;:&nbsp;</td>
-                  <td>N/A</td>
+                  <td>{activity.activity}</td>
                 </tr>
               </tbody>
             </table>
