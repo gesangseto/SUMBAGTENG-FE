@@ -1,9 +1,9 @@
 import { CCol, CRow } from "@coreui/react";
 import React, { lazy } from "react";
 
-const HealthyCheck = lazy(() => import("../widgets/HealthyCheck.js"));
+const HealthyCheckV2 = lazy(() => import("../widgets/HealthyCheckV2.js"));
 const SummaryRequest = lazy(() => import("../widgets/SummaryRequest.js"));
-const Bbm = lazy(() => import("../widgets/Bbm.js"));
+const BbmV2 = lazy(() => import("../widgets/BbmV2.js"));
 const Activity = lazy(() => import("../widgets/Activity.js"));
 const SummaryAlarm = lazy(() => import("../widgets/SummaryAlarm.js"));
 const CalendarWidget = lazy(() => import("../widgets/CalendarWidget.js"));
@@ -14,12 +14,12 @@ const Dashboard = () => {
     <>
       <CRow>
         <CCol sm="12" lg="4">
-          <HealthyCheck />
+          <HealthyCheckV2 />
           <SummaryAlarm />
         </CCol>
         <CCol sm="12" lg="8">
           <SummaryRequest />
-          <Bbm />
+          <BbmV2 />
         </CCol>
       </CRow>
       <CRow>
